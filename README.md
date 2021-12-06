@@ -4,7 +4,7 @@ It look at your life and check if it passed a threshold (default is 35% life). W
 
 This is not intented for online usage!
 
-[Download](https://pages.github.com/)
+**[Download](https://github.com/GitMyCode/d2r-chicken-bot/releases)**
 
 # Demo
 https://user-images.githubusercontent.com/3288428/144772204-4a7184a5-6f7b-45d9-b4af-5b9d27c89f51.mp4
