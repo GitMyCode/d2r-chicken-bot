@@ -2,7 +2,8 @@
 This is a simple script that keep you alive by quiting the game before you die.
 It look at your life and check if it passed a threshold (default is 35% life). When it does it save&quit.
 
-This is not intented for online usage!
+This is not intented for online usage!  
+Also i do advise testing it on a softcore character before using it on a hardcore 😁
 
 **[Download](https://github.com/GitMyCode/d2r-chicken-bot/releases)**
 
