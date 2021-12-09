@@ -7,6 +7,9 @@ Also i do advise testing it on a softcore character before using it on a hardcor
 
 **[Download](https://github.com/GitMyCode/d2r-chicken-bot/releases)**
 
+### Usage
+Click on the `run.cmd` to automaticly launch diablo 2 and the bot together. This is more convenient than having to think about launch the bot each time to launch diablo 2. You can make a shortcut from it directly to your desktop
+
 # Demo
 https://user-images.githubusercontent.com/3288428/144772204-4a7184a5-6f7b-45d9-b4af-5b9d27c89f51.mp4
 
