@@ -14,11 +14,13 @@ Click on the `run.cmd` to automaticly launch diablo 2 and the bot together. This
 https://user-images.githubusercontent.com/3288428/144772204-4a7184a5-6f7b-45d9-b4af-5b9d27c89f51.mp4
 
 # Configuration
-in the folder there is `appsettings.json` file that should look like this:
+in the folder there is `config.yml` file that should look like this:
 ```
-{
-  "QuitOnHealthPercentage": 35
-}
+QuitOnHealthPercentage: 35
+QuitMethod: Both # Other values are: Socket, Menu
+# If you receive a hit that put you with less life than the hit you took then it will quit
+# this can increase survivability when QuitOnHealthPercentage is too low
+QuitOnMajorHit: true 
 ```
 the number is the percentage of life at which the script will quit.
 
