@@ -38,3 +38,7 @@ When you are safe in town you don't need to quit if your life is under the thres
 <img width="1153" alt="image" src="https://user-images.githubusercontent.com/3288428/144770422-cc593918-1033-4e63-bf70-b40607e096a1.png">
 If you are out then it will be in that state and quit if your life goes under the threshold.
 
+
+# Credits
+credits to the nice MapAssists project where i took many piece for the offsets and learned a lot  
+https://github.com/OneXDeveloper/MapAssist
