@@ -1,0 +1,9 @@
+﻿<Application x:Class="D.WpfApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:D.WpfApp" xmlns:clr="clr-namespace:System;assembly=netstandard"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <clr:String x:Key="MyConstString">Status: </clr:String>
+    </Application.Resources>
+</Application>

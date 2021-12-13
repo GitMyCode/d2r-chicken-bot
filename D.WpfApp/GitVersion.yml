@@ -1,0 +1,83 @@
+mode: Mainline
+assembly-versioning-format: '{Major}.{Minor}.{Patch}.{env:BUILDCOUNT ?? 0}'
+assembly-informational-format: '{NuGetVersionV2}+Build.{env:BUILDCOUNT ?? 0}.Date.{CommitDate}.Branch.{env:SAFEBRANCHNAME ?? unknown}.Sha.{Sha}'
+
+tag-prefix: '[vV]'
+continuous-delivery-fallback-tag: '' # ci
+major-version-bump-message: '\+semver:\s?(breaking|major)'
+minor-version-bump-message: '\+semver:\s?(feature|minor)'
+patch-version-bump-message: '\+semver:\s?(fix|patch)'
+no-bump-message: '\+semver:\s?(none|skip)'
+commit-message-incrementing: Enabled
+branches:
+  main:
+    regex: ^master$|^main$
+    tag: ''
+    increment: Patch
+    prevent-increment-of-merged-branch-version: true
+    source-branches:
+      - develop
+      - release
+    tracks-release-branches: false
+    is-release-branch: false
+    is-mainline: true
+  develop:
+    regex: ^dev(elop)?(ment)?$
+    tag: alpha
+    increment: Patch
+    prevent-increment-of-merged-branch-version: false
+    tracks-release-branches: true
+    is-release-branch: false
+    is-mainline: true
+  release:
+    regex: ^release?[/-]
+    tag: beta
+    increment: None
+    prevent-increment-of-merged-branch-version: true
+    source-branches:
+      - develop
+      - main
+      - release
+    is-release-branch: true
+  feature:
+    regex: ^features?[/-]
+    tag: useBranchName
+    increment: Inherit
+    prevent-increment-of-merged-branch-version: false
+    source-branches:
+      - develop
+      - main
+      - release
+      - feature
+      - hotfix
+  pull-request:
+    tag: '' # PullRequest
+    increment: Inherit
+    prevent-increment-of-merged-branch-version: false
+    tag-number-pattern: '[/-](?<number>\d+)'
+    regex: ^(pull|pull\-requests|pr)[/-]
+    source-branches:
+      - develop
+      - main
+      - release
+      - feature
+      - hotfix
+    tracks-release-branches: false
+    is-release-branch: false
+    is-mainline: false
+  hotfix:
+    regex: ^hotfix(es)?[/-]
+    tag: beta
+    increment: Patch
+    prevent-increment-of-merged-branch-version: false
+    source-branches:
+      - develop
+      - main
+    tracks-release-branches: false
+    is-release-branch: false
+    is-mainline: false
+ignore:
+  sha: []
+commit-date-format: yyyy-MM-dd-HHmmss
+merge-message-formats: {}
+update-build-number: true

@@ -1,0 +1,9 @@
+QuitOnHealthPercentage: 35
+QuitMethod: Both # Other values are: Socket, Menu
+# If you receive a hit that put you with less life than the hit you took then it will quit
+# this can increase survivability when QuitOnHealthPercentage is too low
+QuitOnMajorHit: true 
+
+# To help diagnostic problems, i send error data so i can see if there is a problem. you can turn it off
+AnalyticLib:
+  IsDisabled: false

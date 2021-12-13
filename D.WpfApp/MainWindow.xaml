@@ -1,0 +1,170 @@
+﻿<Window x:Class="D.WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:D.WpfApp"
+        mc:Ignorable="d"
+        Height="190" Width="auto"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Topmost="True"
+        WindowStartupLocation="Manual"
+        Loaded="OnWindowLoaded"
+        Closing="WindowClosing"
+        Left="0" 
+        Top="0"
+        >
+    <Window.Resources>
+
+        <!--A Style that affects all TextBlocks-->
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <!--A Style that extends the previous TextBlock Style with an x:Key of TitleText-->
+        <Style BasedOn="{StaticResource {x:Type TextBlock}}"
+           TargetType="TextBlock"
+           x:Key="TitleText">
+            <Setter Property="FontSize" Value="26"/>
+            
+            <Setter Property="Foreground">
+                
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.0" Color="#90DDDD" />
+                            <GradientStop Offset="1.0" Color="#5BFFFF" />
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel
+        
+        
+        >
+
+        <!--<StackPanel.Background>
+                <SolidColorBrush Color="Black"/>
+        </StackPanel.Background>-->
+
+
+        <!--<TextBlock 
+            Text="Status"
+                  Name="textBlock"
+            Foreground="Navy" 
+
+            FontFamily="Century Gothic"
+            FontSize="40"
+            FontStretch="UltraExpanded"
+            FontStyle="Italic"
+            FontWeight="UltraBold"
+            LineHeight="Auto"
+            Padding="5,10,5,10"
+            TextAlignment="Center"
+            TextWrapping="Wrap"
+            Typography.NumeralStyle="OldStyle"
+                   />-->
+        <!--<Button Content="Ok, Got It"
+                Padding="10,5" Margin="10"
+                HorizontalAlignment="Center"
+                Click="Button_Click"/>-->
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <local:TextPath
+                Grid.Row="0" Grid.Column="0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Fill="#de5f5f"
+                Stroke="Black"
+                StrokeThickness="1"
+                FontFamily="Ariel"
+                FontSize="20"
+                FontWeight="Bold"
+                Text="Status" />
+            <local:TextPath
+                x:Name="statusBox"
+                Margin="10 0 0 0"
+                Grid.Row="0" Grid.Column="1"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Fill="#de5f5f"
+                Stroke="Black"
+                StrokeThickness="1"
+                FontFamily="Ariel"
+                FontSize="20"
+                FontWeight="Bold"
+                Text="" />
+            <local:TextPath
+                x:Name="additionalData"
+                Margin="10 0 0 0"
+                Grid.Row="0" Grid.Column="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Fill="#de5f5f"
+                Stroke="Black"
+                StrokeThickness="1"
+                FontFamily="Ariel"
+                FontSize="20"
+                FontWeight="Bold"
+                Text="" />
+
+            <local:TextPath
+                x:Name="version"
+                Margin="10 10 0 0"
+                Grid.Row="1" Grid.Column="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Fill="Green"
+                Stroke="Black"
+                StrokeThickness="1"
+                FontFamily="Ariel"
+                FontSize="12"
+                FontWeight="Bold"
+                Text="Ver" />
+
+            <!--<TextBlock 
+                Name="test"
+                Text="ALLOOOOOO"
+                Style="{StaticResource TitleText}"
+                />-->
+        </Grid>
+
+    </StackPanel>
+
+
+    <!--<Grid x:Name="LayoutRoot">
+
+        <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Collapsed">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity=".5"/>
+            </Grid.Background>
+
+            -->
+    <!-- Add controls as needed -->
+    <!--
+        </Grid>
+
+        -->
+    <!-- Use whatever layout you need -->
+    <!--
+        <ContentControl x:Name="MainContent" />
+
+    </Grid>-->
+</Window>
