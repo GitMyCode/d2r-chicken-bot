@@ -240,7 +240,7 @@ namespace D.Core {
                 : Task.FromResult(false);
 
             Task.WaitAny(outFromSocketTsk, outFromMenuTsk);
-            // cancel only if successful kill socket
+            // cancel only if successfully killed socket
             if (outFromSocketTsk.IsCompleted && outFromSocketTsk.Result)
                 tokenSrc.Cancel();
 
