@@ -233,7 +233,7 @@ namespace D.Core {
             var d2rSockets = InteropTcpHelper.GetAllTcpConnections().Where(x =>
                     x.state == (uint)InteropTcpHelper.State.Established &&
                     x.owningPid == m_ProcessInfo.Process.Id
-            );
+            ).ToList();
 
             var seen = new HashSet<uint>();
             var duplicate = new HashSet<uint>();
@@ -242,7 +242,7 @@ namespace D.Core {
                     duplicate.Add(s.remoteAddr);
                 seen.Add(s.remoteAddr);
             }
-            d2rSockets = d2rSockets.Where(x => !duplicate.Contains(x.remoteAddr));
+            d2rSockets = d2rSockets.Where(x => !duplicate.Contains(x.remoteAddr)).ToList();
             var socketForThatIp = d2rSockets.Last();
             this._mMemoryState.GameSocket = socketForThatIp;
             Logger.LogInformation("found ip: {gameIp}", IPIntToString((int)socketForThatIp.remoteAddr));
