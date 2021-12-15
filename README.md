@@ -17,6 +17,7 @@ https://user-images.githubusercontent.com/3288428/144772204-4a7184a5-6f7b-45d9-b
 in the folder there is `config.yml` file that should look like this:
 ```
 QuitOnHealthPercentage: 35
+# If you are offline then put the value: Menu
 QuitMethod: Both # Other values are: Socket, Menu
 # If you receive a hit that put you with less life than the hit you took then it will quit
 # this can increase survivability when QuitOnHealthPercentage is too low
