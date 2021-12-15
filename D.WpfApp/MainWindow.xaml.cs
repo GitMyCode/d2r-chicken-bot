@@ -14,15 +14,13 @@ using Serilog;
 using Serilog.Events;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
-namespace D.WpfApp
-{
+namespace D.WpfApp {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
-    {
+    public partial class MainWindow {
         private static readonly string machineId = MachineStamp.CreateMachineId();
-        
+
         private readonly TaskScheduler _uiScheduler;
         private readonly AnalyticService m_AnalyticService;
 
@@ -32,14 +30,13 @@ namespace D.WpfApp
         private readonly ILogger logger;
         private IDisposable sessionSpan;
 
-        public MainWindow()
-        {
+        public MainWindow() {
             _uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             InitializeComponent();
             var v = MachineStamp.Version;
 
             version.Text = $"V{v}";
-        
+
             var builder = new ConfigurationBuilder()
 #if !DEBUG
  .SetBasePath(System.IO.Path.GetDirectoryName(Environment.ProcessPath))
@@ -58,8 +55,7 @@ namespace D.WpfApp
                                 {"version", v},
                                 {"machineId", machineId}
                             }))
-                .AddLogging(x =>
-                {
+                .AddLogging(x => {
                     x.ClearProviders();
                     x.AddSerilog(new LoggerConfiguration()
                         .MinimumLevel.Information()
@@ -86,15 +82,13 @@ namespace D.WpfApp
             Close();
         }
 
-        private void OnWindowLoaded(object sender, RoutedEventArgs e)
-        {
+        private void OnWindowLoaded(object sender, RoutedEventArgs e) {
             sessionSpan = GetOutBotAnalytic.StartSession();
             GetOutBotAnalytic.SendStart();
             StartBot();
         }
 
-        private void WindowClosing(object sender, CancelEventArgs e)
-        {
+        private void WindowClosing(object sender, CancelEventArgs e) {
             e.Cancel = true;
             sessionSpan?.Dispose();
             m_AnalyticService.ForceFlush().GetAwaiter().GetResult();
@@ -102,35 +96,26 @@ namespace D.WpfApp
             e.Cancel = false;
         }
 
-        public void StartBot()
-        {
+        public void StartBot() {
             cancellationTokenSource = new CancellationTokenSource();
 
             botThread = new Thread(() => Run(cancellationTokenSource.Token));
             botThread.Start();
         }
 
-        public async Task Run(CancellationToken token = default)
-        {
+        public async Task Run(CancellationToken token = default) {
             await EnsureWindowVisible();
             var uiWriter = new StateUiWriter(statusBox, additionalData, _uiScheduler);
-            try
-            {
+            try {
                 var bot = new GetOutBot(uiWriter, m_ServiceProvider.GetService<BotConfiguration>(),
                     new MemoryReader(m_ServiceProvider.GetService<ILoggerFactory>().CreateLogger<MemoryReader>()),
                     m_ServiceProvider.GetService<ILoggerFactory>().CreateLogger<GetOutBot>(),
                     cancellationTokenSource.Token);
                 await bot.Run();
-            }
-            catch (ThreadInterruptedException)
-            {
-            }
-            catch (OperationCanceledException)
-            {
+            } catch (ThreadInterruptedException) {
+            } catch (OperationCanceledException) {
                 Console.WriteLine("Bot stopped");
-            }
-            catch (Exception exception)
-            {
+            } catch (Exception exception) {
                 Console.WriteLine(exception);
                 logger.LogError("Error {@exception}", exception);
                 uiWriter.WriteState("Error:");
@@ -140,10 +125,8 @@ namespace D.WpfApp
             }
         }
 
-        private async Task EnsureWindowVisible()
-        {
-            await Task.Factory.StartNew(async () =>
-            {
+        private async Task EnsureWindowVisible() {
+            await Task.Factory.StartNew(async () => {
                 await Task.Delay(8000);
                 WindowState = WindowState.Normal;
                 Activate();

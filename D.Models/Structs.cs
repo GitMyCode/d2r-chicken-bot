@@ -1,130 +1,115 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace D.Models
-{
-
-   [StructLayout(LayoutKind.Explicit)]
-   unsafe public struct UiGameMenus
-   {
-      [FieldOffset(0x00)] public byte IsGameMenuOpen;
-      [FieldOffset(0x08)] public byte IsInGame;
-      [FieldOffset(0x09)] public byte IsTrading; // not sure
-      [FieldOffset(0x0A)] public byte StatsWindowOpen;
-      [FieldOffset(0x0B)] public byte MouseAttackMenuOpen;
-      [FieldOffset(0x0C)] public byte SkillTreeMenuOpen;
-      [FieldOffset(0x10)] public byte IsTalkingToNpc;
-      [FieldOffset(0x13)] public byte IsTrading2; // not sure
-      [FieldOffset(0x1B)] public byte WaypointMenuOpen; 
-      [FieldOffset(0x20)] public byte ChestOpen; 
-   }
+namespace D.Models {
 
     [StructLayout(LayoutKind.Explicit)]
-    unsafe public struct StatList
-    {
+    unsafe public struct UiGameMenus {
+        [FieldOffset(0x00)] public byte IsGameMenuOpen;
+        [FieldOffset(0x08)] public byte IsInGame;
+        [FieldOffset(0x09)] public byte IsTrading; // not sure
+        [FieldOffset(0x0A)] public byte StatsWindowOpen;
+        [FieldOffset(0x0B)] public byte MouseAttackMenuOpen;
+        [FieldOffset(0x0C)] public byte SkillTreeMenuOpen;
+        [FieldOffset(0x10)] public byte IsTalkingToNpc;
+        [FieldOffset(0x13)] public byte IsTrading2; // not sure
+        [FieldOffset(0x1B)] public byte WaypointMenuOpen;
+        [FieldOffset(0x20)] public byte ChestOpen;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    unsafe public struct StatList {
         [FieldOffset(0x30)] public readonly StatArray Stats;
         [FieldOffset(0x80)] public readonly StatArray Stats2;
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    unsafe public struct StatArray
-    {
+    unsafe public struct StatArray {
         [FieldOffset(0x0)] public readonly IntPtr Array;
         [FieldOffset(0x8)] public readonly ulong Size;
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    public readonly struct StatValue
-    {
+    public readonly struct StatValue {
         [FieldOffset(0x2)] public readonly Stat Stat;
         [FieldOffset(0x4)] public readonly int Value;
     }
 
     [StructLayout(LayoutKind.Explicit)]
-   unsafe public struct UnitHashTable
-   {
-      [FieldOffset(0x00)]
-      [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
-      public IntPtr[] UnitTable;
-   }
-   
-   [StructLayout(LayoutKind.Explicit)]
-   unsafe public struct UnitAny
-   {
-      //https://github.com/noah-/d2bs#public-int-type-2
-      [FieldOffset(0x00)] public uint UnityType;
-      [FieldOffset(0x04)] public uint TxtFileNo;
-      [FieldOffset(0x08)] public uint UnitId;
-      [FieldOffset(0x10)] public IntPtr UnitData;
-      [FieldOffset(0x20)] public IntPtr pAct;
-      [FieldOffset(0x38)] public IntPtr pPath;
-      [FieldOffset(0x88)] public IntPtr StatsList;
-      [FieldOffset(0x90)] public IntPtr Inventory;
-      [FieldOffset(0xB8)] public uint OwnerType; // ?
-      [FieldOffset(0xC4)] public ushort X;
-      [FieldOffset(0xC6)] public ushort Y;
-      [FieldOffset(0x150)] public IntPtr pListNext;
-      [FieldOffset(0x158)] public IntPtr pRoomNext;
-   }
-   
-   [StructLayout(LayoutKind.Explicit)]
-   unsafe public struct Path
-   {
-      [FieldOffset(0x02)] public ushort DynamicX;
-      [FieldOffset(0x06)] public ushort DynamicY;
-      [FieldOffset(0x10)] public ushort StaticX;
-      [FieldOffset(0x14)] public ushort StaticY;
-      [FieldOffset(0x20)] public IntPtr pRoom;
-   }
-   
-   [StructLayout(LayoutKind.Explicit)]
-   unsafe public struct Room
-   {
-      [FieldOffset(0x00)] public IntPtr pRoomsNear;
-      [FieldOffset(0x18)] public IntPtr pRoomEx;
-      [FieldOffset(0x40)] public uint numRoomsNear;
-      [FieldOffset(0x48)] public IntPtr pAct;
-      [FieldOffset(0xA8)] public IntPtr pUnitFirst;
-      [FieldOffset(0xB0)] public IntPtr pRoomNext;
-   }
-   
-   [StructLayout(LayoutKind.Explicit)]
-   unsafe public struct RoomEx
-   {
-      [FieldOffset(0x90)] public IntPtr pLevel;
-   }
-   
-   [StructLayout(LayoutKind.Explicit)]
-   unsafe public struct Act
-   {
-      [FieldOffset(0x14)] public uint MapSeed;
-      [FieldOffset(0x20)] public uint ActId;
-      [FieldOffset(0x70)] public IntPtr ActMisc;
-   }
-   
-   [StructLayout(LayoutKind.Explicit)]
-   unsafe public struct ActMisc
-   {
-      [FieldOffset(0x830)] public Difficulty GameDifficulty;
-      [FieldOffset(0x858)] public IntPtr pAct;
-      [FieldOffset(0x868)] public IntPtr pLevelFirst;
-   }
-   
-   public enum Difficulty : ushort
-   {
-      Normal = 0,
-      Nightmare = 1,
-      Hell = 2
-   }
-   
-   [StructLayout(LayoutKind.Explicit)]
-   unsafe public struct Level
-   {
-      [FieldOffset(0x1F8)] public Area LevelId;
-   }
+    unsafe public struct UnitHashTable {
+        [FieldOffset(0x00)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
+        public IntPtr[] UnitTable;
+    }
 
-    public enum Area : uint
-    {
+    [StructLayout(LayoutKind.Explicit)]
+    unsafe public struct UnitAny {
+        //https://github.com/noah-/d2bs#public-int-type-2
+        [FieldOffset(0x00)] public uint UnityType;
+        [FieldOffset(0x04)] public uint TxtFileNo;
+        [FieldOffset(0x08)] public uint UnitId;
+        [FieldOffset(0x10)] public IntPtr UnitData;
+        [FieldOffset(0x20)] public IntPtr pAct;
+        [FieldOffset(0x38)] public IntPtr pPath;
+        [FieldOffset(0x88)] public IntPtr StatsList;
+        [FieldOffset(0x90)] public IntPtr Inventory;
+        [FieldOffset(0xB8)] public uint OwnerType; // ?
+        [FieldOffset(0xC4)] public ushort X;
+        [FieldOffset(0xC6)] public ushort Y;
+        [FieldOffset(0x150)] public IntPtr pListNext;
+        [FieldOffset(0x158)] public IntPtr pRoomNext;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    unsafe public struct Path {
+        [FieldOffset(0x02)] public ushort DynamicX;
+        [FieldOffset(0x06)] public ushort DynamicY;
+        [FieldOffset(0x10)] public ushort StaticX;
+        [FieldOffset(0x14)] public ushort StaticY;
+        [FieldOffset(0x20)] public IntPtr pRoom;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    unsafe public struct Room {
+        [FieldOffset(0x00)] public IntPtr pRoomsNear;
+        [FieldOffset(0x18)] public IntPtr pRoomEx;
+        [FieldOffset(0x40)] public uint numRoomsNear;
+        [FieldOffset(0x48)] public IntPtr pAct;
+        [FieldOffset(0xA8)] public IntPtr pUnitFirst;
+        [FieldOffset(0xB0)] public IntPtr pRoomNext;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    unsafe public struct RoomEx {
+        [FieldOffset(0x90)] public IntPtr pLevel;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    unsafe public struct Act {
+        [FieldOffset(0x14)] public uint MapSeed;
+        [FieldOffset(0x20)] public uint ActId;
+        [FieldOffset(0x70)] public IntPtr ActMisc;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    unsafe public struct ActMisc {
+        [FieldOffset(0x830)] public Difficulty GameDifficulty;
+        [FieldOffset(0x858)] public IntPtr pAct;
+        [FieldOffset(0x868)] public IntPtr pLevelFirst;
+    }
+
+    public enum Difficulty : ushort {
+        Normal = 0,
+        Nightmare = 1,
+        Hell = 2
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    unsafe public struct Level {
+        [FieldOffset(0x1F8)] public Area LevelId;
+    }
+
+    public enum Area : uint {
         Abaddon = 125,
         AncientTunnels = 65,
         ArcaneSanctuary = 74,

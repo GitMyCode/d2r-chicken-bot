@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace D.Core
-{
-    public static class WindowsHelper
-    {
+namespace D.Core {
+    public static class WindowsHelper {
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern int SetForegroundWindow(IntPtr hWnd);
 
@@ -19,8 +17,7 @@ namespace D.Core
         public const int MOUSEEVENTF_LEFTUP = 0x04;
 
         //This simulates a left mouse click
-        public static void LeftMouseClick(int xpos, int ypos)
-        {
+        public static void LeftMouseClick(int xpos, int ypos) {
             SetCursorPos(xpos, ypos);
             mouse_event(MOUSEEVENTF_LEFTDOWN, xpos, ypos, 0, 0);
             mouse_event(MOUSEEVENTF_LEFTUP, xpos, ypos, 0, 0);
@@ -37,15 +34,13 @@ namespace D.Core
 
         public static void SendEscapeKey(IntPtr hWnd) => PostMessage(hWnd, WM_KEYDOWN, VK_ESCAPE, 0);
 
-        public static Rect GetWindowRect(IntPtr hWnd)
-        {
+        public static Rect GetWindowRect(IntPtr hWnd) {
             var windowRec = new Rect();
             GetWindowRect(hWnd, ref windowRec);
             return windowRec;
         }
 
-        public enum AllocationProtect : uint
-        {
+        public enum AllocationProtect : uint {
             PAGE_EXECUTE = 0x00000010,
             PAGE_EXECUTE_READ = 0x00000020,
             PAGE_EXECUTE_READWRITE = 0x00000040,
@@ -61,8 +56,7 @@ namespace D.Core
 
         //  https://docs.microsoft.com/en-au/windows/win32/memory/memory-protection-constants
         [Flags]
-        public enum MemoryInformationProtection
-        {
+        public enum MemoryInformationProtection {
             PAGE_EXECUTE = 0x10,
             PAGE_EXECUTE_READ = 0x20,
             PAGE_EXECUTE_READWRITE = 0x40,
@@ -80,24 +74,21 @@ namespace D.Core
         }
 
         //  https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-memory_basic_information
-        public enum MemoryInformationState
-        {
+        public enum MemoryInformationState {
             MEM_COMMIT = 0x1000,
             MEM_FREE = 0x10000,
             MEM_RESERVE = 0x2000
         }
 
         //  https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-memory_basic_information
-        public enum MemoryInformationType
-        {
+        public enum MemoryInformationType {
             MEM_IMAGE = 0x1000000,
             MEM_MAPPED = 0x40000,
             MEM_PRIVATE = 0x20000
         }
 
         [Flags]
-        public enum ProcessAccessFlags : uint
-        {
+        public enum ProcessAccessFlags : uint {
             All = 0x001F0FFF,
             Terminate = 0x00000001,
             CreateThread = 0x00000002,
@@ -113,30 +104,25 @@ namespace D.Core
             Synchronize = 0x00100000
         }
 
-        public static T Read<T>(IntPtr processHandle, IntPtr address) where T : struct
-        {
+        public static T Read<T>(IntPtr processHandle, IntPtr address) where T : struct {
             return Read<T>(processHandle, address, 1)[0];
         }
 
         // copied from https://github.com/misterokaygo/MapAssist/
-        public static T[] Read<T>(IntPtr processHandle, IntPtr address, int count) where T : struct
-        {
+        public static T[] Read<T>(IntPtr processHandle, IntPtr address, int count) where T : struct {
             var size = Marshal.SizeOf<T>();
             var buffer = new byte[size * count];
 
             ReadProcessMemory(processHandle, address, buffer, buffer.Length, out var bytesRead);
 
             var handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-            try
-            {
+            try {
                 var result = new T[count];
                 for (var i = 0; i < count; i++)
                     result[i] = (T)Marshal.PtrToStructure(handle.AddrOfPinnedObject() + i * size, typeof(T));
 
                 return result;
-            }
-            finally
-            {
+            } finally {
                 handle.Free();
             }
         }
@@ -172,8 +158,7 @@ namespace D.Core
 
         // This static method is required because Win32 does not support
         // GetWindowLongPtr directly
-        public static IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex)
-        {
+        public static IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex) {
             if (IntPtr.Size == 8)
                 return GetWindowLongPtr64(hWnd, nIndex);
             return GetWindowLongPtr32(hWnd, nIndex);
@@ -212,8 +197,7 @@ namespace D.Core
         public static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct Rect
-        {
+        public struct Rect {
             public int Left { get; set; }
             public int Top { get; set; }
             public int Right { get; set; }
@@ -221,8 +205,7 @@ namespace D.Core
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct Point
-        {
+        public struct Point {
             public int x;
 
             public int y;
@@ -231,8 +214,7 @@ namespace D.Core
         //  http://www.pinvoke.net/default.aspx/kernel32.virtualqueryex
         //  https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-memory_basic_information
         [StructLayout(LayoutKind.Sequential)]
-        public struct MEMORY_BASIC_INFORMATION64
-        {
+        public struct MEMORY_BASIC_INFORMATION64 {
             public ulong BaseAddress;
             public ulong AllocationBase;
             public int AllocationProtect;

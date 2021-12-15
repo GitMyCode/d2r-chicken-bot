@@ -1,20 +1,16 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace D.Core
-{
-    public enum QuitMethod
-    {
+namespace D.Core {
+    public enum QuitMethod {
         None,
         Both,
         Socket,
         Menu
     }
 
-    public class BotConfiguration
-    {
-        public BotConfiguration(IConfiguration config)
-        {
-            QuitOnHealthPercentage = (double) config.GetValue("QuitOnHealthPercentage", 35) / 100;
+    public class BotConfiguration {
+        public BotConfiguration(IConfiguration config) {
+            QuitOnHealthPercentage = (double)config.GetValue("QuitOnHealthPercentage", 35) / 100;
             QuitMethod = config.GetValue("QuitMethod", QuitMethod.Both);
             QuitOnMajorHit = config.GetValue("QuitOnMajorHit", true);
         }

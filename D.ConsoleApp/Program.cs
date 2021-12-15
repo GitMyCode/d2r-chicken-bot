@@ -4,11 +4,9 @@ using BenchmarkDotNet.Running;
 using D.ConsoleApp;
 using D.Core;
 
-public class Program
-{
-    static void Main(string[] args)
-    {
-       BenchmarkRunner.Run<GameStateBenchmark>();
+public class Program {
+    static void Main(string[] args) {
+        BenchmarkRunner.Run<GameStateBenchmark>();
     }
 }
 
