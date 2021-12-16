@@ -64,6 +64,8 @@ namespace D.Core {
                     m_Logger.LogInformation($"State transition: {transition.Destination}");
                     if (transition.Source == State.LookingForPlayer)
                         m_StateUiWriter.WriteAdditionalData("");
+                    else if (transition.Destination == State.LookingForPlayer && transition.Source != State.GettingOut)
+                        m_StateUiWriter.WriteAdditionalData("");
                 }
             });
 

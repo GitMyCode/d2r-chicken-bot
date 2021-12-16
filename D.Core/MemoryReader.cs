@@ -191,18 +191,7 @@ namespace D.Core {
 
             foreach (var unitPtr in unitHashTable.UnitTable) {
                 var unitAny = WindowsHelper.Read<UnitAny>(pInfo.Handle, unitPtr);
-                if (unitAny.UnityType != 0)
-                    continue;
-
-                var playerName = Encoding.ASCII.GetString(WindowsHelper.Read<byte>(pInfo.Handle, unitAny.UnitData, 16)).TrimEnd((char)0);
-                if (!string.IsNullOrEmpty(playerName)) {
-                    if (dic.ContainsKey(playerName)) {
-                        dic[playerName].Add((unitPtr, unitAny));
-                        mainPlayerName = playerName;
-                    } else {
-                        dic.Add(playerName, new List<(IntPtr, UnitAny)> { (unitPtr, unitAny) });
-                    }
-                }
+                ReadAllUnits(unitAny, unitPtr, dic, pInfo.Handle, ref mainPlayerName);
             }
             foreach (var ptrAndData in dic[mainPlayerName]) {
                 var path = WindowsHelper.Read<Models.Path>(pInfo.Handle, ptrAndData.data.pPath);
@@ -213,6 +202,22 @@ namespace D.Core {
 
             return null;
 
+        }
+
+        public static void ReadAllUnits(UnitAny unitAny, IntPtr curUnitPtr, Dictionary<string, List<(IntPtr ptr, UnitAny data)>> dic, IntPtr hdl, ref string mainPlayer) {
+            if (curUnitPtr == IntPtr.Zero || unitAny.UnityType != 0)
+                return;
+
+            var playerName = Encoding.ASCII.GetString(WindowsHelper.Read<byte>(hdl, unitAny.UnitData, 16)).TrimEnd((char)0);
+            if (!string.IsNullOrEmpty(playerName)) {
+                if (dic.ContainsKey(playerName)) {
+                    dic[playerName].Add((curUnitPtr, unitAny));
+                    mainPlayer = playerName;
+                } else {
+                    dic.Add(playerName, new List<(IntPtr, UnitAny)> { (curUnitPtr, unitAny) });
+                }
+            }
+            ReadAllUnits(WindowsHelper.Read<UnitAny>(hdl, unitAny.pListNext), unitAny.pListNext, dic, hdl, ref mainPlayer);
         }
 
         static int GetCurrentHealth(StatValue[] stats) => stats.FirstOrDefault(x => x.Stat == Stat.STAT_HP).Value >> 8;
@@ -254,7 +259,5 @@ namespace D.Core {
             byte[] addr = System.BitConverter.GetBytes(IP);
             return addr[0] + "." + addr[1] + "." + addr[2] + "." + addr[3];
         }
-
-
     }
 }
