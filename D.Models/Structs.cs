@@ -38,7 +38,7 @@ namespace D.Models {
     [StructLayout(LayoutKind.Explicit)]
     unsafe public struct UnitHashTable {
         [FieldOffset(0x00)]
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
         public IntPtr[] UnitTable;
     }
 

@@ -64,6 +64,8 @@ namespace D.Core {
                     m_Logger.LogInformation($"State transition: {transition.Destination}");
                     if (transition.Source == State.LookingForPlayer)
                         m_StateUiWriter.WriteAdditionalData("");
+                    else if (transition.Destination == State.LookingForPlayer && transition.Source != State.GettingOut)
+                        m_StateUiWriter.WriteAdditionalData("");
                 }
             });
 
@@ -262,7 +264,8 @@ namespace D.Core {
                 var tryCount = 0;
                 var hasToGetOut = true;
                 do {
-                    if (m_token.IsCancellationRequested) {
+                    // we at least try 4 time before cancelling. since maybe the socket kill wasn't the right one lol
+                    if (token.IsCancellationRequested && tryCount > 4) {
                         m_Logger.LogInformation("get out from menu was cancelled");
                         return false;
                     }
@@ -276,7 +279,7 @@ namespace D.Core {
                     var height = windowRect.Bottom - windowRect.Top;
                     WindowsHelper.LeftMouseClick(windowRect.Left + width / 2, windowRect.Top + height / 20 * 9);
                     m_Logger.LogInformation($"Tried to get out from menu. tryCount: {tryCount}");
-                    await Task.Delay(10, token);
+                    await Task.Delay(10);
                     tryCount++;
                     state = GetState();
                     hasToGetOut = HasToGetOut(state);
