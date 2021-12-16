@@ -205,16 +205,18 @@ namespace D.Core {
         }
 
         public static void ReadAllUnits(UnitAny unitAny, IntPtr curUnitPtr, Dictionary<string, List<(IntPtr ptr, UnitAny data)>> dic, IntPtr hdl, ref string mainPlayer) {
-            if (curUnitPtr == IntPtr.Zero || unitAny.UnityType != 0)
+            if (curUnitPtr == IntPtr.Zero)
                 return;
 
-            var playerName = Encoding.ASCII.GetString(WindowsHelper.Read<byte>(hdl, unitAny.UnitData, 16)).TrimEnd((char)0);
-            if (!string.IsNullOrEmpty(playerName)) {
-                if (dic.ContainsKey(playerName)) {
-                    dic[playerName].Add((curUnitPtr, unitAny));
-                    mainPlayer = playerName;
-                } else {
-                    dic.Add(playerName, new List<(IntPtr, UnitAny)> { (curUnitPtr, unitAny) });
+            if(unitAny.UnityType == 0) {
+                var playerName = Encoding.ASCII.GetString(WindowsHelper.Read<byte>(hdl, unitAny.UnitData, 16)).TrimEnd((char)0);
+                if (!string.IsNullOrEmpty(playerName)) {
+                    if (dic.ContainsKey(playerName)) {
+                        dic[playerName].Add((curUnitPtr, unitAny));
+                        mainPlayer = playerName;
+                    } else {
+                        dic.Add(playerName, new List<(IntPtr, UnitAny)> { (curUnitPtr, unitAny) });
+                    }
                 }
             }
             ReadAllUnits(WindowsHelper.Read<UnitAny>(hdl, unitAny.pListNext), unitAny.pListNext, dic, hdl, ref mainPlayer);
