@@ -39,7 +39,7 @@ public class Program {
 
             //    unitAny = WindowsHelper.Read<UnitAny>(p.Handle, unitAny.pListNext);
             //}while()
-            
+
         }
 
         foreach (var entry in dic) {
