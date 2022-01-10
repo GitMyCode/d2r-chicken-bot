@@ -209,7 +209,8 @@ namespace D.Core {
             if (state == null || state.IsDead() || state.IsInTown)
                 return false;
 
-            if (m_Config.QuitOnMajorHit && state.PreviousHealth.HasValue) {
+            if (m_Config.QuitOnMajorHit && state.PreviousHealth.HasValue 
+                && state.PreviousHealth.Value <= state.MaxHealth) { // to prevent quitting when buff end 
                 var previousHealth = state.PreviousHealth.Value;
                 var previousHit = previousHealth - state.CurrentHealth;
                 var wasMajorHit = previousHit >= state.CurrentHealth;
