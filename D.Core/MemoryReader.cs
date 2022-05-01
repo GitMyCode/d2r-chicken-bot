@@ -98,8 +98,9 @@ namespace D.Core {
         public IntPtr GetUnitHashtableAddress() {
             if (_mMemoryState.UnitHashtableAddressPtr != IntPtr.Zero)
                 return _mMemoryState.UnitHashtableAddressPtr;
-
-            var offsetResult = m_ProcessInfo.Scanner.CompiledFindPattern("48 8d ?? ?? ?? ?? ?? 8b d1");
+            
+            // shameless copy from https://github.com/OneXDeveloper/MapAssist/commit/5f2f12964bcc15a7af94f7df9cdf52d8f045c464
+            var offsetResult = m_ProcessInfo.Scanner.CompiledFindPattern("48 8d 0d ?? ?? ?? ?? 48 c1 e0 0a 48 03 c1 c3 cc");
             var resultRelativeAddress = IntPtr.Add(IntPtr.Add(m_ProcessInfo.BaseAddress, offsetResult.Offset), 3);
             var offSetAddress = WindowsHelper.Read<int>(m_ProcessInfo.Handle, resultRelativeAddress);
 
