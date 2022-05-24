@@ -94,17 +94,16 @@ namespace D.Core {
             return m_ProcessInfo;
         }
 
-        // Took from https://github.com/OneXDeveloper/MapAssist/pull/28
         public IntPtr GetUnitHashtableAddress() {
             if (_mMemoryState.UnitHashtableAddressPtr != IntPtr.Zero)
                 return _mMemoryState.UnitHashtableAddressPtr;
-            
-            // shameless copy from https://github.com/OneXDeveloper/MapAssist/commit/5f2f12964bcc15a7af94f7df9cdf52d8f045c464
-            var offsetResult = m_ProcessInfo.Scanner.CompiledFindPattern("48 8d 0d ?? ?? ?? ?? 48 c1 e0 0a 48 03 c1 c3 cc");
-            var resultRelativeAddress = IntPtr.Add(IntPtr.Add(m_ProcessInfo.BaseAddress, offsetResult.Offset), 3);
+
+            // shameless copy from https://github.com/OneXDeveloper/MapAssist/   Helpers/Pattern.cs
+            var offsetResult = m_ProcessInfo.Scanner.CompiledFindPattern("48 03 C7 49 8B 8C C6");
+            var resultRelativeAddress = IntPtr.Add(IntPtr.Add(m_ProcessInfo.BaseAddress, offsetResult.Offset), 7);
             var offSetAddress = WindowsHelper.Read<int>(m_ProcessInfo.Handle, resultRelativeAddress);
 
-            return IntPtr.Add(m_ProcessInfo.BaseAddress, offsetResult.Offset + 7 + offSetAddress);
+            return IntPtr.Add(m_ProcessInfo.BaseAddress, offSetAddress);
         }
 
         //https://github.com/OneXDeveloper/MapAssist/blob/main/Helpers/ProcessContext.cs
