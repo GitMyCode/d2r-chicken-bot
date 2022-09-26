@@ -157,7 +157,7 @@ namespace D.Core {
                 mStatList = ReadAndValidate<StatList>(m_ProcessInfo, _mMemoryState.PlayerUnit.StatsList);
 
                 var playerName = Encoding.ASCII.GetString(WindowsHelper.Read<byte>(m_ProcessInfo.Handle, _mMemoryState.PlayerUnit.UnitData, 16)).TrimEnd((char)0);
-                var stats = WindowsHelper.Read<StatValue>(m_ProcessInfo.Handle, mStatList.Stats2.Array, (int)mStatList.Stats2.Size);
+                var stats = WindowsHelper.Read<StatValue>(m_ProcessInfo.Handle, mStatList.Stats.Array, (int)mStatList.Stats.Size);
                 var levelId = mLevel.LevelId;
                 if (levelId == Area.None)
                     throw new Exception("Invalid area");
